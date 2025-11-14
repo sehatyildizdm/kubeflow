@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oauth2-proxy
+  namespace: deploykf-auth
+spec:
+  template:
+    spec:
+      containers:
+        - name: oauth2-proxy
+          env:
+            - name: SSL_CERT_FILE
+              value: /etc/ssl/certs/ca.crt
+          volumeMounts:
+            - name: cluster-ca
+              mountPath: /etc/ssl/certs/ca.crt
+              subPath: ca.crt
+              readOnly: true
+      volumes:
+        - name: cluster-ca
+          secret:
+            secretName: cluster-ca

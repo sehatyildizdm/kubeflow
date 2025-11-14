@@ -1,0 +1,14 @@
+# Certificates and private keys
+*.crt
+*.key
+*.pem
+*.cer
+*.der
+
+# If certificates might appear in subfolders
+**/*.crt
+**/*.key
+**/*.pem
+**/*.cer
+**/*.der
+

@@ -1,0 +1,31 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-tls-cert
+  namespace: argocd
+spec:
+  secretName: argocd-server-tls
+  issuerRef:
+    name: ca-issuer
+    kind: ClusterIssuer
+  commonName: openlineage.ura.go.ug
+  dnsNames:
+    - openlineage.ura.go.ug
+    - openlineage.ura.go
+    - openlineage.ura
+    - openlineage
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  subject:
+    countries:
+    - TR
+    organizationalUnits:
+    - DataOps
+    organizations:
+    - Datamind
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+  - client auth

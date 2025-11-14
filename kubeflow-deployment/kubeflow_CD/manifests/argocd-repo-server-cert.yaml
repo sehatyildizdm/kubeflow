@@ -1,0 +1,32 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-repo-server-cert
+  namespace: argocd
+spec:
+  secretName: argocd-repo-server-tls
+  issuerRef:
+    name: ca-issuer
+    kind: ClusterIssuer
+  commonName: argocd-repo-server.argocd.svc.cluster.local
+  dnsNames:
+    - argocd-repo-server.argocd.svc.cluster.local
+    - argocd-repo-server.argocd.svc.cluster
+    - argocd-repo-server.argocd.svc
+    - argocd-repo-server.argocd
+    - argocd-repo-server
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  subject:
+    countries:
+    - TR
+    organizationalUnits:
+    - DataOps
+    organizations:
+    - Datamind
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+  - client auth

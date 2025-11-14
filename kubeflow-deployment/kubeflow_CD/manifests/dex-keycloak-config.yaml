@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dex-keycloak-config
+  namespace: deploykf-auth
+  labels:
+    app.kubernetes.io/instance: dkf-core--deploykf-auth
+type: Opaque
+## NOTE: you may also use `data` if you base64 encode the string
+stringData:
+  key-in-secret-with-config-yaml-string: |
+    issuer: https://keycloak.uds.ura.go.ug/realms/master
+    clientID: kubeflow
+    clientSecret: X8ht4EADgRi8cAOxpMXuWYrWX3q3Cvf2
+    redirectURI: https://kubeflow.uds.ura.go.ug/dex/callback
+    scopes:
+      - openid
+      - email
+      - profile
+      ## NOTE: offline_access is required for refresh tokens
+      - offline_access
+    
+    ## keycloak does not always send the `email_verified` claim
+    insecureSkipEmailVerified: true
+    
+    ## if your Keycloak uses a self-signed certificate
+    insecureSkipVerify: true
