@@ -1,0 +1,66 @@
+# create tls secrets for mysql server and router
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mysql-server-tls-cert
+  namespace: mysql-innodb
+spec:
+  secretName: mysql-server-tls-secret
+  issuerRef:
+    name: ca-issuer
+    kind: ClusterIssuer
+  commonName: mysql-metastore-instances.mysql-innodb.svc.cluster.local
+  dnsNames:
+    - mysql-metastore-instances.mysql-innodb.svc.cluster.local
+    - '*.mysql-metastore-instances.mysql-innodb.svc.cluster.local'
+    - mysql-metastore-instances.mysql-innodb.svc
+    - mysql-metastore-instances.mysql-innodb
+    - mysql-metastore-instances
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  subject:
+    countries:
+    - TR
+    organizationalUnits:
+    - DataOps
+    organizations:
+    - Datamind
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+  - client auth
+---
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mysql-router-tls-cert
+  namespace: mysql-innodb
+spec:
+  secretName: mysql-router-tls-secret
+  issuerRef:
+    name: ca-issuer
+    kind: ClusterIssuer
+  commonName: mysql-metastore.mysql-innodb.svc.cluster.local
+  dnsNames:
+    - mysql-metastore.mysql-innodb.svc.cluster.local
+    - mysql-metastore.mysql-innodb.svc
+    - mysql-metastore.mysql-innodb
+    - mysql-metastore
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  subject:
+    countries:
+    - TR
+    organizationalUnits:
+    - DataOps
+    organizations:
+    - Datamind
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+  - client auth
