@@ -1,0 +1,35 @@
+serverInstances: 3                 # 3 for InnoDB cluster quorum (minimum)
+routerInstances: 3                 # >1 for HA
+
+tls:
+  useSelfSigned: false
+credentials:
+  root:
+    user: root
+    password: CTeHc8qyURoZs2xm
+    host: "%"
+tls:
+  useSelfSigned: false
+  serverCertAndPKsecretName: mysql-server-tls-secret
+  caSecretName: mysql-ca-secret
+  routerCertAndPKsecretName: mysql-router-tls-secret
+podSpec:
+  containers:
+  - name: mysql
+    resources:
+      requests:
+        memory: "8Gi"
+        cpu: "2000m"
+      limits:
+        memory: "16Gi"
+        cpu: "4000m"
+datadirVolumeClaimTemplate:
+  accessModes: ReadWriteOnce
+  storageClassName: local-path
+  resources:
+    requests:
+      storage: 50Gi
+serverConfig:
+  mycnf: |
+    [mysqld]
+    mysql_native_password=ON
